@@ -9,20 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    OpenCvWorker.cpp \
-    QCvWidget.cpp \
-    main.cpp
+    OpenCvAgent.cpp \
+    main.cpp \
+    qcvwidget.cpp
 
 HEADERS += \
-    OpenCvWorker.h \
-    QCvWidget.h
+    OpenCvAgent.h \
+    qcvwidget.h
 
 FORMS += \
-    QCvWidget.ui
+    qcvwidget.ui
 
-#LIBS += -L/usr/local/include -lopencv_highgui -lopencv_core -lopencv_imgproc -lopencv_videoio
 INCLUDEPATH += /usr/local/include/opencv4
-#LIBS += $(shell pkg-config opencv --libs)
+
 LIBS += -L/usr/local/lib\
         -lopencv_calib3d\
         -lopencv_core\

@@ -2,7 +2,7 @@
 #define QCVWIDGET_H
 
 #include <QWidget>
-#include <QThread>
+#include <OpenCvAgent.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class QCvWidget; }
@@ -17,27 +17,25 @@ public:
     ~QCvWidget();
 
 private:
-    Ui::QCvWidget *_ui;
-    QThread *_thread; ///< thread for running frame processing function
-
-    /**
-     * @brief Initialize main window
-     */
+    Ui::QCvWidget *ui;
     void _init();
-    void _toggleVisualBottomBar();
+    OpenCvAgent *myCvAgent;
+
+private slots:
+//    void slotButtonPlayPressed();
+//    void slotRcvOriginalFrame(QImage frame);
+    void slotRcvNewFrames(QImage &inpFr, QImage &outFr);
+    void slotRcvInvalidCapDev(void);
 
 signals:
-    void sendSetup(int device);
-
     /**
      * @brief Signal to send the stream source, typed in lineEditStreamSrd. Also acts like a play Stream callback
      * @param stream const ref to stream
      */
-    void sendStreamSrc(const QString &stream);
+    void signalSendStreamSrc(const QString &stream);
 
-private slots:
-    void rcvFrame(QImage frame);
-    void rcvToggleStream();
-    void rcvInvalidCapDev(const QString &device);
+    //void rcvNewFrame(QImage frame);
+
+
 };
 #endif // QCVWIDGET_H

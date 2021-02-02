@@ -1,4 +1,4 @@
-#include "QCvWidget.h"
+#include "qcvwidget.h"
 
 #include <QApplication>
 
