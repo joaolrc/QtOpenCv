@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1213</width>
-    <height>717</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -45,11 +45,11 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="labelBin">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>490</y>
+     <x>510</x>
+     <y>430</y>
      <width>191</width>
      <height>81</height>
     </rect>
@@ -68,7 +68,7 @@
    <property name="geometry">
     <rect>
      <x>-10</x>
-     <y>690</y>
+     <y>570</y>
      <width>1241</width>
      <height>16</height>
     </rect>
@@ -96,7 +96,7 @@
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>700</y>
+     <y>580</y>
      <width>201</width>
      <height>16</height>
     </rect>
@@ -108,21 +108,24 @@
   <widget class="QSpinBox" name="spinBoxBinThresh">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>520</y>
+     <x>550</x>
+     <y>460</y>
      <width>121</width>
      <height>25</height>
     </rect>
    </property>
    <property name="toolTip">
     <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+   <property name="maximum">
+    <number>255</number>
    </property>
   </widget>
   <widget class="QSpinBox" name="spinBoxHmin">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>510</y>
+     <x>320</x>
+     <y>450</y>
      <width>121</width>
      <height>25</height>
     </rect>
@@ -130,12 +133,15 @@
    <property name="toolTip">
     <string>Set here the threshold value [1,255] or 0 to disable filter</string>
    </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="labelHue">
    <property name="geometry">
     <rect>
-     <x>460</x>
-     <y>490</y>
+     <x>280</x>
+     <y>430</y>
      <width>191</width>
      <height>81</height>
     </rect>
@@ -153,8 +159,8 @@
   <widget class="QSpinBox" name="spinBoxHmax">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>540</y>
+     <x>320</x>
+     <y>480</y>
      <width>121</width>
      <height>25</height>
     </rect>
@@ -162,12 +168,15 @@
    <property name="toolTip">
     <string>Set here the threshold value [1,255] or 0 to disable filter</string>
    </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="labelHmin">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>520</y>
+     <x>290</x>
+     <y>460</y>
      <width>58</width>
      <height>16</height>
     </rect>
@@ -176,76 +185,76 @@
     <string>min</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="labelHmax">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>550</y>
-     <width>31</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Max</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_8">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>520</y>
-     <width>58</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>min</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_9">
-   <property name="geometry">
-    <rect>
-     <x>700</x>
-     <y>550</y>
-     <width>31</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Max</string>
-   </property>
-  </widget>
-  <widget class="QSpinBox" name="spinBox_4">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>510</y>
-     <width>121</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
-   </property>
-  </widget>
-  <widget class="QSpinBox" name="spinBox_5">
-   <property name="geometry">
-    <rect>
-     <x>730</x>
-     <y>540</y>
-     <width>121</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_10">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
+     <x>290</x>
      <y>490</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelSmin">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>460</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>min</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelSmax">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>490</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxSmin">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>450</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxSmax">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>480</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelSat">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>430</y>
      <width>191</width>
      <height>81</height>
     </rect>
@@ -260,11 +269,11 @@
     <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_11">
+  <widget class="QLabel" name="labelVmin">
    <property name="geometry">
     <rect>
-     <x>920</x>
-     <y>520</y>
+     <x>740</x>
+     <y>460</y>
      <width>58</width>
      <height>16</height>
     </rect>
@@ -273,11 +282,11 @@
     <string>min</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_12">
+  <widget class="QLabel" name="labelVmax">
    <property name="geometry">
     <rect>
-     <x>920</x>
-     <y>550</y>
+     <x>740</x>
+     <y>490</y>
      <width>31</width>
      <height>16</height>
     </rect>
@@ -286,11 +295,11 @@
     <string>Max</string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_6">
+  <widget class="QSpinBox" name="spinBoxVmin">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>510</y>
+     <x>770</x>
+     <y>450</y>
      <width>121</width>
      <height>25</height>
     </rect>
@@ -299,11 +308,11 @@
     <string>Set here the threshold value [1,255] or 0 to disable filter</string>
    </property>
   </widget>
-  <widget class="QSpinBox" name="spinBox_7">
+  <widget class="QSpinBox" name="spinBoxVmax">
    <property name="geometry">
     <rect>
-     <x>950</x>
-     <y>540</y>
+     <x>770</x>
+     <y>480</y>
      <width>121</width>
      <height>25</height>
     </rect>
@@ -312,11 +321,11 @@
     <string>Set here the threshold value [1,255] or 0 to disable filter</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_13">
+  <widget class="QLabel" name="labelValue">
    <property name="geometry">
     <rect>
-     <x>910</x>
-     <y>490</y>
+     <x>730</x>
+     <y>430</y>
      <width>191</width>
      <height>81</height>
     </rect>
@@ -335,7 +344,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>650</y>
+     <y>530</y>
      <width>1141</width>
      <height>26</height>
     </rect>
@@ -351,17 +360,30 @@
     <item>
      <widget class="QPushButton" name="pushButtonPlay">
       <property name="text">
-       <string>PushButton</string>
+       <string>Play</string>
       </property>
      </widget>
     </item>
    </layout>
   </widget>
-  <widget class="QComboBox" name="comboBoxFilterType">
+  <widget class="QLabel" name="label_15">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>490</y>
+     <x>20</x>
+     <y>430</y>
+     <width>111</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Color Scheme</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBoxColorScheme">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>450</y>
      <width>151</width>
      <height>24</height>
     </rect>
@@ -370,7 +392,7 @@
     <string/>
    </property>
    <property name="currentText">
-    <string>None</string>
+    <string>RGB</string>
    </property>
    <property name="currentIndex">
     <number>0</number>
@@ -380,12 +402,12 @@
    </property>
    <item>
     <property name="text">
-     <string>None</string>
+     <string>RGB</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Binary</string>
+     <string>Grayscale</string>
     </property>
    </item>
    <item>
@@ -394,43 +416,287 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="label_14">
+  <widget class="QSpinBox" name="spinBoxBmin">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>470</y>
-     <width>101</width>
+     <x>770</x>
+     <y>450</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxRmin">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>450</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelRmax">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>490</y>
+     <width>31</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Filter Type</string>
+    <string>Max</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelGmin">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>460</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>min</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBlue">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>430</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 1px solid</string>
+   </property>
+   <property name="text">
+    <string>Blue</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBmax">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>490</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxBmax">
+   <property name="geometry">
+    <rect>
+     <x>770</x>
+     <y>480</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelRed">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>430</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 1px solid</string>
+   </property>
+   <property name="text">
+    <string>Red</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelGmax">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>490</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Max</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxGmin">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>450</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelGreen">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>430</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 1px solid</string>
+   </property>
+   <property name="text">
+    <string>Green</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxRmax">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>480</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelRmin">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>460</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>min</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBoxGmax">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>480</y>
+     <width>121</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="toolTip">
+    <string>Set here the threshold value [1,255] or 0 to disable filter</string>
+   </property>
+   <property name="maximum">
+    <number>255</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelBmin">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>460</y>
+     <width>58</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>min</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBoxBinFilterOn">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>490</y>
+     <width>83</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enable</string>
+   </property>
+  </widget>
+  <zorder>labelBin</zorder>
+  <zorder>labelBlue</zorder>
+  <zorder>labelGreen</zorder>
+  <zorder>labelRed</zorder>
+  <zorder>labelSat</zorder>
+  <zorder>labelValue</zorder>
   <zorder>layoutWidget</zorder>
-  <zorder>label_5</zorder>
-  <zorder>label_3</zorder>
+  <zorder>labelHue</zorder>
   <zorder>labelViewOriginal</zorder>
   <zorder>labelViewProcessed</zorder>
   <zorder>line</zorder>
   <zorder>label_4</zorder>
-  <zorder>spinBoxBinThresh</zorder>
   <zorder>spinBoxHmin</zorder>
   <zorder>spinBoxHmax</zorder>
-  <zorder>label_6</zorder>
-  <zorder>label_7</zorder>
-  <zorder>label_8</zorder>
-  <zorder>label_9</zorder>
-  <zorder>spinBox_4</zorder>
-  <zorder>spinBox_5</zorder>
-  <zorder>label_10</zorder>
-  <zorder>label_11</zorder>
-  <zorder>label_12</zorder>
-  <zorder>spinBox_6</zorder>
-  <zorder>spinBox_7</zorder>
-  <zorder>label_13</zorder>
-  <zorder>comboBoxFilterType</zorder>
-  <zorder>label_14</zorder>
+  <zorder>labelHmin</zorder>
+  <zorder>labelHmax</zorder>
+  <zorder>labelSmin</zorder>
+  <zorder>labelSmax</zorder>
+  <zorder>spinBoxSmin</zorder>
+  <zorder>spinBoxSmax</zorder>
+  <zorder>labelVmin</zorder>
+  <zorder>labelVmax</zorder>
+  <zorder>spinBoxVmin</zorder>
+  <zorder>spinBoxVmax</zorder>
+  <zorder>label_15</zorder>
+  <zorder>comboBoxColorScheme</zorder>
+  <zorder>spinBoxBmin</zorder>
+  <zorder>spinBoxRmin</zorder>
+  <zorder>labelRmax</zorder>
+  <zorder>labelGmin</zorder>
+  <zorder>labelBmax</zorder>
+  <zorder>spinBoxBmax</zorder>
+  <zorder>labelGmax</zorder>
+  <zorder>spinBoxGmin</zorder>
+  <zorder>spinBoxRmax</zorder>
+  <zorder>labelRmin</zorder>
+  <zorder>spinBoxGmax</zorder>
+  <zorder>labelBmin</zorder>
+  <zorder>checkBoxBinFilterOn</zorder>
+  <zorder>spinBoxBinThresh</zorder>
  </widget>
  <resources/>
  <connections/>

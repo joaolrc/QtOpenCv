@@ -20,6 +20,9 @@ private:
     Ui::QCvWidget *ui;
     void _init();
     OpenCvAgent *myCvAgent;
+    void setRgbVisibility(bool isVisible);
+    void setHsvVisibility(bool isVisible);
+    void setBinVisibility(bool isVisible);
 
 private slots:
 //    void slotButtonPlayPressed();

@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
@@ -27,37 +28,53 @@ class Ui_QCvWidget
 public:
     QLabel *labelViewOriginal;
     QLabel *labelViewProcessed;
-    QLabel *label_3;
+    QLabel *labelBin;
     QFrame *line;
     QLabel *label_4;
     QSpinBox *spinBoxBinThresh;
     QSpinBox *spinBoxHmin;
-    QLabel *label_5;
+    QLabel *labelHue;
     QSpinBox *spinBoxHmax;
-    QLabel *label_6;
-    QLabel *label_7;
-    QLabel *label_8;
-    QLabel *label_9;
-    QSpinBox *spinBox_4;
-    QSpinBox *spinBox_5;
-    QLabel *label_10;
-    QLabel *label_11;
-    QLabel *label_12;
-    QSpinBox *spinBox_6;
-    QSpinBox *spinBox_7;
-    QLabel *label_13;
+    QLabel *labelHmin;
+    QLabel *labelHmax;
+    QLabel *labelSmin;
+    QLabel *labelSmax;
+    QSpinBox *spinBoxSmin;
+    QSpinBox *spinBoxSmax;
+    QLabel *labelSat;
+    QLabel *labelVmin;
+    QLabel *labelVmax;
+    QSpinBox *spinBoxVmin;
+    QSpinBox *spinBoxVmax;
+    QLabel *labelValue;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLineEdit *lineEditStream;
     QPushButton *pushButtonPlay;
-    QComboBox *comboBoxFilterType;
-    QLabel *label_14;
+    QLabel *label_15;
+    QComboBox *comboBoxColorScheme;
+    QSpinBox *spinBoxBmin;
+    QSpinBox *spinBoxRmin;
+    QLabel *labelRmax;
+    QLabel *labelGmin;
+    QLabel *labelBlue;
+    QLabel *labelBmax;
+    QSpinBox *spinBoxBmax;
+    QLabel *labelRed;
+    QLabel *labelGmax;
+    QSpinBox *spinBoxGmin;
+    QLabel *labelGreen;
+    QSpinBox *spinBoxRmax;
+    QLabel *labelRmin;
+    QSpinBox *spinBoxGmax;
+    QLabel *labelBmin;
+    QCheckBox *checkBoxBinFilterOn;
 
     void setupUi(QWidget *QCvWidget)
     {
         if (QCvWidget->objectName().isEmpty())
             QCvWidget->setObjectName(QString::fromUtf8("QCvWidget"));
-        QCvWidget->resize(1213, 717);
+        QCvWidget->resize(1213, 596);
         labelViewOriginal = new QLabel(QCvWidget);
         labelViewOriginal->setObjectName(QString::fromUtf8("labelViewOriginal"));
         labelViewOriginal->setGeometry(QRect(20, 10, 571, 401));
@@ -66,14 +83,14 @@ public:
         labelViewProcessed->setObjectName(QString::fromUtf8("labelViewProcessed"));
         labelViewProcessed->setGeometry(QRect(620, 10, 571, 401));
         labelViewProcessed->setStyleSheet(QString::fromUtf8("border: 1px solid;"));
-        label_3 = new QLabel(QCvWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(230, 490, 191, 81));
-        label_3->setStyleSheet(QString::fromUtf8("border: 1px solid"));
-        label_3->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        labelBin = new QLabel(QCvWidget);
+        labelBin->setObjectName(QString::fromUtf8("labelBin"));
+        labelBin->setGeometry(QRect(510, 430, 191, 81));
+        labelBin->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelBin->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
         line = new QFrame(QCvWidget);
         line->setObjectName(QString::fromUtf8("line"));
-        line->setGeometry(QRect(-10, 690, 1241, 16));
+        line->setGeometry(QRect(-10, 570, 1241, 16));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -85,64 +102,67 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         label_4 = new QLabel(QCvWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(510, 700, 201, 16));
+        label_4->setGeometry(QRect(510, 580, 201, 16));
         spinBoxBinThresh = new QSpinBox(QCvWidget);
         spinBoxBinThresh->setObjectName(QString::fromUtf8("spinBoxBinThresh"));
-        spinBoxBinThresh->setGeometry(QRect(270, 520, 121, 25));
+        spinBoxBinThresh->setGeometry(QRect(550, 460, 121, 25));
+        spinBoxBinThresh->setMaximum(255);
         spinBoxHmin = new QSpinBox(QCvWidget);
         spinBoxHmin->setObjectName(QString::fromUtf8("spinBoxHmin"));
-        spinBoxHmin->setGeometry(QRect(500, 510, 121, 25));
-        label_5 = new QLabel(QCvWidget);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(460, 490, 191, 81));
-        label_5->setStyleSheet(QString::fromUtf8("border: 1px solid"));
-        label_5->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        spinBoxHmin->setGeometry(QRect(320, 450, 121, 25));
+        spinBoxHmin->setMaximum(255);
+        labelHue = new QLabel(QCvWidget);
+        labelHue->setObjectName(QString::fromUtf8("labelHue"));
+        labelHue->setGeometry(QRect(280, 430, 191, 81));
+        labelHue->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelHue->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
         spinBoxHmax = new QSpinBox(QCvWidget);
         spinBoxHmax->setObjectName(QString::fromUtf8("spinBoxHmax"));
-        spinBoxHmax->setGeometry(QRect(500, 540, 121, 25));
-        label_6 = new QLabel(QCvWidget);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(470, 520, 58, 16));
-        label_7 = new QLabel(QCvWidget);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setGeometry(QRect(470, 550, 31, 16));
-        label_8 = new QLabel(QCvWidget);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(700, 520, 58, 16));
-        label_9 = new QLabel(QCvWidget);
-        label_9->setObjectName(QString::fromUtf8("label_9"));
-        label_9->setGeometry(QRect(700, 550, 31, 16));
-        spinBox_4 = new QSpinBox(QCvWidget);
-        spinBox_4->setObjectName(QString::fromUtf8("spinBox_4"));
-        spinBox_4->setGeometry(QRect(730, 510, 121, 25));
-        spinBox_5 = new QSpinBox(QCvWidget);
-        spinBox_5->setObjectName(QString::fromUtf8("spinBox_5"));
-        spinBox_5->setGeometry(QRect(730, 540, 121, 25));
-        label_10 = new QLabel(QCvWidget);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-        label_10->setGeometry(QRect(690, 490, 191, 81));
-        label_10->setStyleSheet(QString::fromUtf8("border: 1px solid"));
-        label_10->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
-        label_11 = new QLabel(QCvWidget);
-        label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setGeometry(QRect(920, 520, 58, 16));
-        label_12 = new QLabel(QCvWidget);
-        label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(920, 550, 31, 16));
-        spinBox_6 = new QSpinBox(QCvWidget);
-        spinBox_6->setObjectName(QString::fromUtf8("spinBox_6"));
-        spinBox_6->setGeometry(QRect(950, 510, 121, 25));
-        spinBox_7 = new QSpinBox(QCvWidget);
-        spinBox_7->setObjectName(QString::fromUtf8("spinBox_7"));
-        spinBox_7->setGeometry(QRect(950, 540, 121, 25));
-        label_13 = new QLabel(QCvWidget);
-        label_13->setObjectName(QString::fromUtf8("label_13"));
-        label_13->setGeometry(QRect(910, 490, 191, 81));
-        label_13->setStyleSheet(QString::fromUtf8("border: 1px solid"));
-        label_13->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        spinBoxHmax->setGeometry(QRect(320, 480, 121, 25));
+        spinBoxHmax->setMaximum(255);
+        labelHmin = new QLabel(QCvWidget);
+        labelHmin->setObjectName(QString::fromUtf8("labelHmin"));
+        labelHmin->setGeometry(QRect(290, 460, 58, 16));
+        labelHmax = new QLabel(QCvWidget);
+        labelHmax->setObjectName(QString::fromUtf8("labelHmax"));
+        labelHmax->setGeometry(QRect(290, 490, 31, 16));
+        labelSmin = new QLabel(QCvWidget);
+        labelSmin->setObjectName(QString::fromUtf8("labelSmin"));
+        labelSmin->setGeometry(QRect(520, 460, 58, 16));
+        labelSmax = new QLabel(QCvWidget);
+        labelSmax->setObjectName(QString::fromUtf8("labelSmax"));
+        labelSmax->setGeometry(QRect(520, 490, 31, 16));
+        spinBoxSmin = new QSpinBox(QCvWidget);
+        spinBoxSmin->setObjectName(QString::fromUtf8("spinBoxSmin"));
+        spinBoxSmin->setGeometry(QRect(550, 450, 121, 25));
+        spinBoxSmax = new QSpinBox(QCvWidget);
+        spinBoxSmax->setObjectName(QString::fromUtf8("spinBoxSmax"));
+        spinBoxSmax->setGeometry(QRect(550, 480, 121, 25));
+        labelSat = new QLabel(QCvWidget);
+        labelSat->setObjectName(QString::fromUtf8("labelSat"));
+        labelSat->setGeometry(QRect(510, 430, 191, 81));
+        labelSat->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelSat->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        labelVmin = new QLabel(QCvWidget);
+        labelVmin->setObjectName(QString::fromUtf8("labelVmin"));
+        labelVmin->setGeometry(QRect(740, 460, 58, 16));
+        labelVmax = new QLabel(QCvWidget);
+        labelVmax->setObjectName(QString::fromUtf8("labelVmax"));
+        labelVmax->setGeometry(QRect(740, 490, 31, 16));
+        spinBoxVmin = new QSpinBox(QCvWidget);
+        spinBoxVmin->setObjectName(QString::fromUtf8("spinBoxVmin"));
+        spinBoxVmin->setGeometry(QRect(770, 450, 121, 25));
+        spinBoxVmax = new QSpinBox(QCvWidget);
+        spinBoxVmax->setObjectName(QString::fromUtf8("spinBoxVmax"));
+        spinBoxVmax->setGeometry(QRect(770, 480, 121, 25));
+        labelValue = new QLabel(QCvWidget);
+        labelValue->setObjectName(QString::fromUtf8("labelValue"));
+        labelValue->setGeometry(QRect(730, 430, 191, 81));
+        labelValue->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelValue->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
         layoutWidget = new QWidget(QCvWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(40, 650, 1141, 26));
+        layoutWidget->setGeometry(QRect(40, 530, 1141, 26));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -156,44 +176,119 @@ public:
 
         horizontalLayout->addWidget(pushButtonPlay);
 
-        comboBoxFilterType = new QComboBox(QCvWidget);
-        comboBoxFilterType->addItem(QString());
-        comboBoxFilterType->addItem(QString());
-        comboBoxFilterType->addItem(QString());
-        comboBoxFilterType->setObjectName(QString::fromUtf8("comboBoxFilterType"));
-        comboBoxFilterType->setGeometry(QRect(40, 490, 151, 24));
-        comboBoxFilterType->setMaxVisibleItems(2);
-        label_14 = new QLabel(QCvWidget);
-        label_14->setObjectName(QString::fromUtf8("label_14"));
-        label_14->setGeometry(QRect(80, 470, 101, 16));
+        label_15 = new QLabel(QCvWidget);
+        label_15->setObjectName(QString::fromUtf8("label_15"));
+        label_15->setGeometry(QRect(20, 430, 111, 16));
+        comboBoxColorScheme = new QComboBox(QCvWidget);
+        comboBoxColorScheme->addItem(QString());
+        comboBoxColorScheme->addItem(QString());
+        comboBoxColorScheme->addItem(QString());
+        comboBoxColorScheme->setObjectName(QString::fromUtf8("comboBoxColorScheme"));
+        comboBoxColorScheme->setGeometry(QRect(20, 450, 151, 24));
+        comboBoxColorScheme->setMaxVisibleItems(2);
+        spinBoxBmin = new QSpinBox(QCvWidget);
+        spinBoxBmin->setObjectName(QString::fromUtf8("spinBoxBmin"));
+        spinBoxBmin->setGeometry(QRect(770, 450, 121, 25));
+        spinBoxRmin = new QSpinBox(QCvWidget);
+        spinBoxRmin->setObjectName(QString::fromUtf8("spinBoxRmin"));
+        spinBoxRmin->setGeometry(QRect(320, 450, 121, 25));
+        spinBoxRmin->setMaximum(255);
+        labelRmax = new QLabel(QCvWidget);
+        labelRmax->setObjectName(QString::fromUtf8("labelRmax"));
+        labelRmax->setGeometry(QRect(290, 490, 31, 16));
+        labelGmin = new QLabel(QCvWidget);
+        labelGmin->setObjectName(QString::fromUtf8("labelGmin"));
+        labelGmin->setGeometry(QRect(520, 460, 58, 16));
+        labelBlue = new QLabel(QCvWidget);
+        labelBlue->setObjectName(QString::fromUtf8("labelBlue"));
+        labelBlue->setGeometry(QRect(730, 430, 191, 81));
+        labelBlue->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelBlue->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        labelBmax = new QLabel(QCvWidget);
+        labelBmax->setObjectName(QString::fromUtf8("labelBmax"));
+        labelBmax->setGeometry(QRect(740, 490, 31, 16));
+        spinBoxBmax = new QSpinBox(QCvWidget);
+        spinBoxBmax->setObjectName(QString::fromUtf8("spinBoxBmax"));
+        spinBoxBmax->setGeometry(QRect(770, 480, 121, 25));
+        labelRed = new QLabel(QCvWidget);
+        labelRed->setObjectName(QString::fromUtf8("labelRed"));
+        labelRed->setGeometry(QRect(280, 430, 191, 81));
+        labelRed->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelRed->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        labelGmax = new QLabel(QCvWidget);
+        labelGmax->setObjectName(QString::fromUtf8("labelGmax"));
+        labelGmax->setGeometry(QRect(520, 490, 31, 16));
+        spinBoxGmin = new QSpinBox(QCvWidget);
+        spinBoxGmin->setObjectName(QString::fromUtf8("spinBoxGmin"));
+        spinBoxGmin->setGeometry(QRect(550, 450, 121, 25));
+        labelGreen = new QLabel(QCvWidget);
+        labelGreen->setObjectName(QString::fromUtf8("labelGreen"));
+        labelGreen->setGeometry(QRect(510, 430, 191, 81));
+        labelGreen->setStyleSheet(QString::fromUtf8("border: 1px solid"));
+        labelGreen->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
+        spinBoxRmax = new QSpinBox(QCvWidget);
+        spinBoxRmax->setObjectName(QString::fromUtf8("spinBoxRmax"));
+        spinBoxRmax->setGeometry(QRect(320, 480, 121, 25));
+        spinBoxRmax->setMaximum(255);
+        spinBoxRmax->setValue(0);
+        labelRmin = new QLabel(QCvWidget);
+        labelRmin->setObjectName(QString::fromUtf8("labelRmin"));
+        labelRmin->setGeometry(QRect(290, 460, 58, 16));
+        spinBoxGmax = new QSpinBox(QCvWidget);
+        spinBoxGmax->setObjectName(QString::fromUtf8("spinBoxGmax"));
+        spinBoxGmax->setGeometry(QRect(550, 480, 121, 25));
+        spinBoxGmax->setMaximum(255);
+        spinBoxGmax->setValue(0);
+        labelBmin = new QLabel(QCvWidget);
+        labelBmin->setObjectName(QString::fromUtf8("labelBmin"));
+        labelBmin->setGeometry(QRect(740, 460, 58, 16));
+        checkBoxBinFilterOn = new QCheckBox(QCvWidget);
+        checkBoxBinFilterOn->setObjectName(QString::fromUtf8("checkBoxBinFilterOn"));
+        checkBoxBinFilterOn->setGeometry(QRect(550, 490, 83, 22));
+        labelBin->raise();
+        labelBlue->raise();
+        labelGreen->raise();
+        labelRed->raise();
+        labelSat->raise();
+        labelValue->raise();
         layoutWidget->raise();
-        label_5->raise();
-        label_3->raise();
+        labelHue->raise();
         labelViewOriginal->raise();
         labelViewProcessed->raise();
         line->raise();
         label_4->raise();
-        spinBoxBinThresh->raise();
         spinBoxHmin->raise();
         spinBoxHmax->raise();
-        label_6->raise();
-        label_7->raise();
-        label_8->raise();
-        label_9->raise();
-        spinBox_4->raise();
-        spinBox_5->raise();
-        label_10->raise();
-        label_11->raise();
-        label_12->raise();
-        spinBox_6->raise();
-        spinBox_7->raise();
-        label_13->raise();
-        comboBoxFilterType->raise();
-        label_14->raise();
+        labelHmin->raise();
+        labelHmax->raise();
+        labelSmin->raise();
+        labelSmax->raise();
+        spinBoxSmin->raise();
+        spinBoxSmax->raise();
+        labelVmin->raise();
+        labelVmax->raise();
+        spinBoxVmin->raise();
+        spinBoxVmax->raise();
+        label_15->raise();
+        comboBoxColorScheme->raise();
+        spinBoxBmin->raise();
+        spinBoxRmin->raise();
+        labelRmax->raise();
+        labelGmin->raise();
+        labelBmax->raise();
+        spinBoxBmax->raise();
+        labelGmax->raise();
+        spinBoxGmin->raise();
+        spinBoxRmax->raise();
+        labelRmin->raise();
+        spinBoxGmax->raise();
+        labelBmin->raise();
+        checkBoxBinFilterOn->raise();
+        spinBoxBinThresh->raise();
 
         retranslateUi(QCvWidget);
 
-        comboBoxFilterType->setCurrentIndex(0);
+        comboBoxColorScheme->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(QCvWidget);
@@ -204,7 +299,7 @@ public:
         QCvWidget->setWindowTitle(QCoreApplication::translate("QCvWidget", "QCvWidget", nullptr));
         labelViewOriginal->setText(QString());
         labelViewProcessed->setText(QString());
-        label_3->setText(QCoreApplication::translate("QCvWidget", "Binary Threshold", nullptr));
+        labelBin->setText(QCoreApplication::translate("QCvWidget", "Binary Threshold", nullptr));
         label_4->setText(QCoreApplication::translate("QCvWidget", "Jo\303\243o Costa | Aveiro | 31 Jan 2021", nullptr));
 #if QT_CONFIG(tooltip)
         spinBoxBinThresh->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
@@ -212,41 +307,69 @@ public:
 #if QT_CONFIG(tooltip)
         spinBoxHmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
-        label_5->setText(QCoreApplication::translate("QCvWidget", "Hue Threshold", nullptr));
+        labelHue->setText(QCoreApplication::translate("QCvWidget", "Hue Threshold", nullptr));
 #if QT_CONFIG(tooltip)
         spinBoxHmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
-        label_6->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
-        label_7->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
-        label_8->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
-        label_9->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+        labelHmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+        labelHmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+        labelSmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+        labelSmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
 #if QT_CONFIG(tooltip)
-        spinBox_4->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+        spinBoxSmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
-        spinBox_5->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+        spinBoxSmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
-        label_10->setText(QCoreApplication::translate("QCvWidget", "Saturation Threshold", nullptr));
-        label_11->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
-        label_12->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+        labelSat->setText(QCoreApplication::translate("QCvWidget", "Saturation Threshold", nullptr));
+        labelVmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+        labelVmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
 #if QT_CONFIG(tooltip)
-        spinBox_6->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+        spinBoxVmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(tooltip)
-        spinBox_7->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+        spinBoxVmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
 #endif // QT_CONFIG(tooltip)
-        label_13->setText(QCoreApplication::translate("QCvWidget", "Value Threshold", nullptr));
+        labelValue->setText(QCoreApplication::translate("QCvWidget", "Value Threshold", nullptr));
         lineEditStream->setPlaceholderText(QCoreApplication::translate("QCvWidget", "Enter here a stream source Examples: For webcam --> 0  |  For rtsp stream--> rtsp://192.168.1.123/stream?user=admin&psw=admin", nullptr));
-        pushButtonPlay->setText(QCoreApplication::translate("QCvWidget", "PushButton", nullptr));
-        comboBoxFilterType->setItemText(0, QCoreApplication::translate("QCvWidget", "None", nullptr));
-        comboBoxFilterType->setItemText(1, QCoreApplication::translate("QCvWidget", "Binary", nullptr));
-        comboBoxFilterType->setItemText(2, QCoreApplication::translate("QCvWidget", "HSV", nullptr));
+        pushButtonPlay->setText(QCoreApplication::translate("QCvWidget", "Play", nullptr));
+        label_15->setText(QCoreApplication::translate("QCvWidget", "Color Scheme", nullptr));
+        comboBoxColorScheme->setItemText(0, QCoreApplication::translate("QCvWidget", "RGB", nullptr));
+        comboBoxColorScheme->setItemText(1, QCoreApplication::translate("QCvWidget", "Grayscale", nullptr));
+        comboBoxColorScheme->setItemText(2, QCoreApplication::translate("QCvWidget", "HSV", nullptr));
 
 #if QT_CONFIG(accessibility)
-        comboBoxFilterType->setAccessibleName(QString());
+        comboBoxColorScheme->setAccessibleName(QString());
 #endif // QT_CONFIG(accessibility)
-        comboBoxFilterType->setCurrentText(QCoreApplication::translate("QCvWidget", "None", nullptr));
-        label_14->setText(QCoreApplication::translate("QCvWidget", "Filter Type", nullptr));
+        comboBoxColorScheme->setCurrentText(QCoreApplication::translate("QCvWidget", "RGB", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxBmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        spinBoxRmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+        labelRmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+        labelGmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+        labelBlue->setText(QCoreApplication::translate("QCvWidget", "Blue", nullptr));
+        labelBmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxBmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+        labelRed->setText(QCoreApplication::translate("QCvWidget", "Red", nullptr));
+        labelGmax->setText(QCoreApplication::translate("QCvWidget", "Max", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxGmin->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+        labelGreen->setText(QCoreApplication::translate("QCvWidget", "Green", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxRmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+        labelRmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+#if QT_CONFIG(tooltip)
+        spinBoxGmax->setToolTip(QCoreApplication::translate("QCvWidget", "Set here the threshold value [1,255] or 0 to disable filter", nullptr));
+#endif // QT_CONFIG(tooltip)
+        labelBmin->setText(QCoreApplication::translate("QCvWidget", "min", nullptr));
+        checkBoxBinFilterOn->setText(QCoreApplication::translate("QCvWidget", "Enable", nullptr));
     } // retranslateUi
 
 };

@@ -2,88 +2,146 @@
 #include "ui_qcvwidget.h"
 #include <QMessageBox>
 
+
 QCvWidget::QCvWidget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::QCvWidget),
       myCvAgent(nullptr)
 {
     ui->setupUi(this);
+
+
+
     ui->pushButtonPlay->setEnabled(!ui->lineEditStream->text().isEmpty());
     ui->labelViewOriginal->setScaledContents(true);
-    ui->labelViewOriginal->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+   // ui->labelViewOriginal->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    ui->spinBoxHmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    ui->spinBoxSmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    ui->spinBoxVmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    ui->spinBoxRmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    ui->spinBoxGmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    ui->spinBoxBmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
+    setBinVisibility(false);
+    setHsvVisibility(false);
+    setRgbVisibility(true);
+    myCvAgent = new OpenCvAgent;
     _init();
 }
 
 QCvWidget::~QCvWidget()
 {
-    delete ui;
     delete myCvAgent;
+    delete ui;
+
 }
 
 
 void QCvWidget::_init(){
-    myCvAgent = new OpenCvAgent;
     //dont let Push Play if no stream Src specified
-    //ui->pushButtonPlay->setEnabled(ui->lineEditStream->isEnabled());
     connect(ui->lineEditStream, &QLineEdit::textChanged, [this](const QString & text) {
       ui->pushButtonPlay->setEnabled(!text.isEmpty());
     });
     connect(this, SIGNAL(signalSendStreamSrc(const QString &)), myCvAgent, SLOT(slotPlayStreamSource(const QString &)));
-    connect(ui->comboBoxFilterType, SIGNAL(currentIndexChanged(int)), myCvAgent, SLOT(setFilterType(int)) );
+//    connect(ui->comboBoxFilterType, SIGNAL(currentIndexChanged(int)), myCvAgent, SLOT(setFilterType(int)) );
     connect(ui->pushButtonPlay, &QPushButton::clicked,this, [this]() {
        qDebug("Send Stream Src: %s", qUtf8Printable(ui->lineEditStream->text()));
+       ui->pushButtonPlay->text()=="Play" ? ui->pushButtonPlay->setText("Pause") : ui->pushButtonPlay->setText("Play");
        emit signalSendStreamSrc(ui->lineEditStream->text());
     });
 
+    connect(ui->checkBoxBinFilterOn,  &QCheckBox::toggled, this, [this](bool enabled){
+        myCvAgent->slotSetBinThreshEn(enabled);
+    });
     connect(myCvAgent, SIGNAL(signalSendFrames(QImage &,QImage &)), this, SLOT(slotRcvNewFrames(QImage &, QImage &)));
     connect(ui->spinBoxBinThresh, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBinaryThresh(int)));
     connect( myCvAgent, SIGNAL(signalWarnInvalidCaptureDevice(void)),this,SLOT(slotRcvInvalidCapDev(void)));
+    connect(ui->comboBoxColorScheme, &QComboBox::currentIndexChanged, this, [this](int index){
+        myCvAgent->setColorScheme(index);
+        switch (index) {
+        case OCA_COLORSCHEME_GRAY:
+            setBinVisibility(true);
+            setRgbVisibility(false);
+            setHsvVisibility(false);
+            break;
+        case OCA_COLORSCHEME_RGB:
+            setRgbVisibility(true);
+            setBinVisibility(false);
+            setHsvVisibility(false);
+            break;
+        case OCA_COLORSCHEME_HSV:
+            setRgbVisibility(false);
+            setBinVisibility(false);
+            setHsvVisibility(true);
+            break;
+        default:
+            break;
+        }
+    } );
 
 
-
-//    _thread = new QThread();
-//    OpenCvWorker * worker = new OpenCvWorker();
-//    QTimer *workerTrigger = new QTimer();
-//    workerTrigger->setInterval(1); //test 0 here
-
-    //try to grab a new frame every time timeout triggers
-  //  connect(workerTrigger, SIGNAL(timeout()), worker, SLOT(rcvGrabFrame()) );
-
-    //connect(this, SIGNAL(sendSetup(int)), myCvAgent, SLOT(rcvGrabFrame()));
-
-
-    //call func everytime PushButton is clicked
-    //connect(ui->pushButtonPlay, SIGNAL(clicked(bool)), this, SLOT(rcvButtonPlayPressed()) );
-    //send EnableBinThresh checkbox value everytime it updates
-    //connect(_ui->checkBoxEnableBinaryThreshold, SIGNAL(toggled(bool)), worker, SLOT(rcvEnableBinaryThreshold()));
-    //send new thresh each time spinbox updates
-    //connect(_ui->spinBoxBinaryThreshold, SIGNAL(valueChanged(int)), worker, SLOT(rcvBinaryThreshold(int)));
-    //rcv each frame sent by openCv module and render on UI
-    //connect(myCvAgent, SIGNAL(sendFrame(QImage)), this, SLOT(rcvOriginalFrame(QImage)));
-    //When play button pressed-> send textbox value
-    //connect(this, SIGNAL(sendStreamSrc(const QString &)), myCvAgent, SLOT(rcvPlayStreamSrc(const QString &)));
-    //When invalid capture dev is specified
-    //connect( worker, SIGNAL(sendWarnInvalidCaptureDevice(const QString &)), this, SLOT(rcvInvalidCapDev(const QString &)) );
-
-
-//    workerTrigger->start();
-//    worker->moveToThread(_thread);
-//    workerTrigger->moveToThread(_thread);
-//    _thread->start();
-  //  emit sendSetup(0);
-
+    //could set pairs instead of one by one to avoid code duplication
+    connect(ui->spinBoxHmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setHmin(int)));
+    connect(ui->spinBoxHmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setHmax(int)));
+    connect(ui->spinBoxSmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setSmin(int)));
+    connect(ui->spinBoxSmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setSmax(int)));
+    connect(ui->spinBoxVmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setVmin(int)));
+    connect(ui->spinBoxVmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setVmax(int)));
+    connect(ui->spinBoxRmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setRmin(int)));
+    connect(ui->spinBoxRmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setRmax(int)));
+    connect(ui->spinBoxGmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setGmin(int)));
+    connect(ui->spinBoxGmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setGmax(int)));
+    connect(ui->spinBoxBmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBmin(int)));
+    connect(ui->spinBoxBmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBmax(int)));
 
 }
 
-//void QCvWidget::rcvButtonPlayPressed(){
-//    emit sendStreamSrc(ui->lineEditStream->text());
-//}
 
 void QCvWidget::slotRcvNewFrames(QImage &inpFr, QImage &outFr){
-    qDebug("RCV frames");
     ui->labelViewOriginal->setPixmap(QPixmap::fromImage(inpFr).scaled(ui->labelViewOriginal->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     ui->labelViewProcessed->setPixmap(QPixmap::fromImage(outFr));
 
+}
+void QCvWidget::setRgbVisibility(bool isVisible){
+    ui->labelRed->setVisible(isVisible);
+    ui->spinBoxRmin->setVisible(isVisible);
+    ui->spinBoxRmax->setVisible(isVisible);
+    ui->labelRmin->setVisible(isVisible);
+    ui->labelRmax->setVisible(isVisible);
+    ui->labelGreen->setVisible(isVisible);
+    ui->labelGmin->setVisible(isVisible);
+    ui->labelGmax->setVisible(isVisible);
+    ui->spinBoxGmin->setVisible(isVisible);
+    ui->spinBoxGmax->setVisible(isVisible);
+    ui->labelBlue->setVisible(isVisible);
+    ui->labelBmin->setVisible(isVisible);
+    ui->labelBmax->setVisible(isVisible);
+    ui->spinBoxBmin->setVisible(isVisible);
+    ui->spinBoxBmax->setVisible(isVisible);
+
+}
+
+void QCvWidget::setHsvVisibility(bool isVisible){
+    ui->labelHue->setVisible(isVisible);
+    ui->labelHmin->setVisible(isVisible);
+    ui->labelHmax->setVisible(isVisible);
+    ui->spinBoxHmin->setVisible(isVisible);
+    ui->spinBoxHmax->setVisible(isVisible);
+    ui->labelSat->setVisible(isVisible);
+    ui->labelSmin->setVisible(isVisible);
+    ui->labelSmax->setVisible(isVisible);
+    ui->spinBoxSmin->setVisible(isVisible);
+    ui->spinBoxSmax->setVisible(isVisible);
+    ui->labelValue->setVisible(isVisible);
+    ui->labelVmin->setVisible(isVisible);
+    ui->labelVmax->setVisible(isVisible);
+    ui->spinBoxVmin->setVisible(isVisible);
+    ui->spinBoxVmax->setVisible(isVisible);
+}
+
+void QCvWidget::setBinVisibility(bool isVisible){
+    ui->labelBin->setVisible(isVisible);
+    ui->spinBoxBinThresh->setVisible(isVisible);
+    ui->checkBoxBinFilterOn->setVisible(isVisible);
 }
 
 void QCvWidget::slotRcvInvalidCapDev(void){
