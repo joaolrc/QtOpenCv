@@ -9,17 +9,24 @@
 #include <opencv4/opencv2/highgui/highgui.hpp>
 #include <opencv4/opencv2/core.hpp>
 
-#define OCA_FILTERTYPE_NONE 0
-#define OCA_FILTERTYPE_BIN 1
-#define OCA_FILTERTYPE_HSV 2
+//Max values for HSV thresh
+#define OCA_MAXVAL_HUE 179              ///< should be 360 but openCv thinks different
+#define OCA_MAXVAL_SAT 255              ///< should be 100 but..
+#define OCA_MAXVAL_VAL 255              ///< should be 100 but..
 
-#define OCA_WORKER_TRIGGER_TIME_MS 100
+//Max values for RGB thresh
+#define OCA_MAXVAL_RED 255
+#define OCA_MAXVAL_GREEN 255
+#define OCA_MAXVAL_BLUE 255
 
-#define OCA_COLORSCHEME_RGB 0   ///< Default
+// Color schemes/spaces. Could use enum for this
+#define OCA_COLORSCHEME_RGB 0
 #define OCA_COLORSCHEME_GRAY 1
 #define OCA_COLORSCHEME_HSV 2
 
-#define OCA_HSVRGB_MAX_DEFAULT_VAL 130
+#define OCA_HSVRGB_MAX_DEFAULT_VAL 130  ///< which max value to start with
+
+#define OCA_WORKER_TRIGGER_TIME_MS 100  ///< Timer to call slotProcessNewFrame() when stream enabled
 
 struct imageFilterValues_t {
   uint8_t binThresh;
@@ -45,7 +52,10 @@ public:
     ~OpenCvAgent();
 
 
-    void processStream();
+    /**
+     * @brief set Color Scheme which will be applied in 1st conversion from _frameOriginal into _frameProcessed
+     * @param colorScheme check defines above OCA_COLORSCHEME_...
+     */
     void setColorScheme(int colorScheme);
 
 private:
@@ -53,7 +63,7 @@ private:
     cv::Mat _frameProcessed;                ///< _frameOriginal after applyFilters()
     cv::VideoCapture *_cap;                 ///< capture handler
 
-    bool _isStreamEnabled;
+    bool _isStreamEnabled;                  ///< enable/disable stream processment
     bool _isBinThreshEnabled;               ///< if false-> processBin is not called
     QString _streamSrc;                     ///< input for VideoCapture
     uint8_t _colorScheme;                   ///< color scheme to convert _frameOriginal to
@@ -65,22 +75,13 @@ private:
      * @brief Applies myFilterValues to _frameOriginal and saves it into _frameProcessed
      * returns QImage::format to be applied in conversion for QImage of _frameProcessed
      */
-    uint8_t applyFilters();
+    QImage::Format applyFilters();
 
 
     /**
      * @brief Free mem occupied by video capture and image processment and also release cap dev
      */
     void freeProcessingResources();
-
-
-    /**
-     * @brief checks wether an int var can be casted to uint8_t without being truncated
-     * @param val in variable to be casted
-     * @return true if can be converted. False otherwise
-     */
-    bool _isValidUint8(int &val);
-
 
 
 signals:
@@ -99,6 +100,10 @@ signals:
 
 
 private slots:
+    /**
+     * @brief Grab a new frame from capture device, process it and emit signal with it
+     * Should be called by timer or within while loop
+     */
     void slotProcessNewFrame();
 
 
@@ -110,7 +115,8 @@ public slots:
     void slotSetBinThreshEn(bool isEnable);
 
     /**
-     * @brief Set Stream source and Play. Only allowed when not streaming
+     * @brief Set Stream source and Play. If streaming, it will pause it
+     * @param stream argument passed to cv::VideoCapture(stream)
      */
     void slotPlayStreamSource(const QString &stream);
 

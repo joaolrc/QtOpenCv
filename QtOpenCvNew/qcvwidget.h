@@ -18,16 +18,34 @@ public:
 
 private:
     Ui::QCvWidget *ui;
-    void _init();
     OpenCvAgent *myCvAgent;
+
+    /**
+     * @brief intialize ui components
+     */
+    void _init();
+
+    /**
+     *  \defgroup FiltersVisibilitySetters Set visibility of Filter setters
+     *  @{
+     */
     void setRgbVisibility(bool isVisible);
     void setHsvVisibility(bool isVisible);
     void setBinVisibility(bool isVisible);
+    /**@}*/
 
 private slots:
-//    void slotButtonPlayPressed();
-//    void slotRcvOriginalFrame(QImage frame);
+
+    /**
+     * @brief Receive new frames from OpenCv worker and display in UI
+     * @param inpFr Frame without processement
+     * @param outFr inpFr processed
+     */
     void slotRcvNewFrames(QImage &inpFr, QImage &outFr);
+
+    /**
+     * @brief If invalid capture device specified, this will receive a signal to display warning
+     */
     void slotRcvInvalidCapDev(void);
 
 signals:
@@ -37,7 +55,7 @@ signals:
      */
     void signalSendStreamSrc(const QString &stream);
 
-    //void rcvNewFrame(QImage frame);
+
 
 
 };

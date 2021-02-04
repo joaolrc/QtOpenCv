@@ -3,18 +3,26 @@
 #include <QMessageBox>
 
 
-QCvWidget::QCvWidget(QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::QCvWidget),
-      myCvAgent(nullptr)
+QCvWidget::QCvWidget(QWidget *parent):
+    QWidget(parent),
+    ui(new Ui::QCvWidget),
+    myCvAgent(nullptr)
 {
     ui->setupUi(this);
 
 
 
     ui->pushButtonPlay->setEnabled(!ui->lineEditStream->text().isEmpty());
-    ui->labelViewOriginal->setScaledContents(true);
-   // ui->labelViewOriginal->setSizePolicy( QSizePolicy::Ignored, QSizePolicy::Ignored );
+    //ui->labelViewOriginal->setScaledContents(true); //?
+
+
+    ui->spinBoxBinThresh->setMaximum(UINT8_MAX);
+    ui->spinBoxHmax->setMaximum(OCA_MAXVAL_HUE);
+    ui->spinBoxSmax->setMaximum(OCA_MAXVAL_SAT);
+    ui->spinBoxVmax->setMaximum(OCA_MAXVAL_VAL);
+    ui->spinBoxRmax->setMaximum(OCA_MAXVAL_RED);
+    ui->spinBoxGmax->setMaximum(OCA_MAXVAL_GREEN);
+    ui->spinBoxBmax->setMaximum(OCA_MAXVAL_BLUE);
     ui->spinBoxHmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
     ui->spinBoxSmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
     ui->spinBoxVmax->setValue(OCA_HSVRGB_MAX_DEFAULT_VAL);
@@ -24,6 +32,7 @@ QCvWidget::QCvWidget(QWidget *parent)
     setBinVisibility(false);
     setHsvVisibility(false);
     setRgbVisibility(true);
+
     myCvAgent = new OpenCvAgent;
     _init();
 }
@@ -41,20 +50,26 @@ void QCvWidget::_init(){
     connect(ui->lineEditStream, &QLineEdit::textChanged, [this](const QString & text) {
       ui->pushButtonPlay->setEnabled(!text.isEmpty());
     });
+
     connect(this, SIGNAL(signalSendStreamSrc(const QString &)), myCvAgent, SLOT(slotPlayStreamSource(const QString &)));
-//    connect(ui->comboBoxFilterType, SIGNAL(currentIndexChanged(int)), myCvAgent, SLOT(setFilterType(int)) );
+
     connect(ui->pushButtonPlay, &QPushButton::clicked,this, [this]() {
        qDebug("Send Stream Src: %s", qUtf8Printable(ui->lineEditStream->text()));
        ui->pushButtonPlay->text()=="Play" ? ui->pushButtonPlay->setText("Pause") : ui->pushButtonPlay->setText("Play");
        emit signalSendStreamSrc(ui->lineEditStream->text());
     });
 
+    //set/unset bin filter
     connect(ui->checkBoxBinFilterOn,  &QCheckBox::toggled, this, [this](bool enabled){
         myCvAgent->slotSetBinThreshEn(enabled);
     });
+
+    //on new frame
     connect(myCvAgent, SIGNAL(signalSendFrames(QImage &,QImage &)), this, SLOT(slotRcvNewFrames(QImage &, QImage &)));
-    connect(ui->spinBoxBinThresh, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBinaryThresh(int)));
+
+
     connect( myCvAgent, SIGNAL(signalWarnInvalidCaptureDevice(void)),this,SLOT(slotRcvInvalidCapDev(void)));
+
     connect(ui->comboBoxColorScheme, &QComboBox::currentIndexChanged, this, [this](int index){
         myCvAgent->setColorScheme(index);
         switch (index) {
@@ -79,7 +94,7 @@ void QCvWidget::_init(){
     } );
 
 
-    //could set pairs instead of one by one to avoid code duplication
+    //SpinBoxes TODO could set pairs instead of one by one to avoid code duplication
     connect(ui->spinBoxHmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setHmin(int)));
     connect(ui->spinBoxHmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setHmax(int)));
     connect(ui->spinBoxSmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setSmin(int)));
@@ -92,6 +107,7 @@ void QCvWidget::_init(){
     connect(ui->spinBoxGmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setGmax(int)));
     connect(ui->spinBoxBmin, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBmin(int)));
     connect(ui->spinBoxBmax, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBmax(int)));
+    connect(ui->spinBoxBinThresh, SIGNAL(valueChanged(int)), myCvAgent, SLOT(setBinaryThresh(int)));
 
 }
 
@@ -148,6 +164,8 @@ void QCvWidget::slotRcvInvalidCapDev(void){
     char aux_warnMsg[200];
     sprintf(aux_warnMsg, "The Capture device specified \"%s\" is invalid.\nPlease input another one and retry", qUtf8Printable(ui->lineEditStream->text()));
     QMessageBox::warning(0, QString("Invalid Capture Device"), aux_warnMsg, QMessageBox::Ok);
+    ui->pushButtonPlay->setText("Play");
+    ui->lineEditStream->setText("");
 
 }
 

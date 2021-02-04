@@ -12,6 +12,7 @@ OpenCvAgent::OpenCvAgent(QObject *parent) :
     _myFilterValues({0, 0, OCA_HSVRGB_MAX_DEFAULT_VAL, 0, OCA_HSVRGB_MAX_DEFAULT_VAL, 0,OCA_HSVRGB_MAX_DEFAULT_VAL, 0, OCA_HSVRGB_MAX_DEFAULT_VAL, 0, OCA_HSVRGB_MAX_DEFAULT_VAL, 0, OCA_HSVRGB_MAX_DEFAULT_VAL})
 {}
 
+
 OpenCvAgent::~OpenCvAgent(){
     freeProcessingResources();
 }
@@ -26,7 +27,7 @@ void OpenCvAgent::slotPlayStreamSource(const QString &stream){
     _isStreamEnabled = !_isStreamEnabled;
     if (_isStreamEnabled){
         qDebug("Will enable stream");
-        bool aux_isStrInt;
+        bool aux_isStrInt = false;
         int aux_intStr = _streamSrc.toInt(&aux_isStrInt, 10);
         aux_isStrInt ? _cap = new cv::VideoCapture(aux_intStr) : _cap = new cv::VideoCapture(qUtf8Printable(_streamSrc));
         if (!_cap->isOpened()){
@@ -62,17 +63,19 @@ void OpenCvAgent::slotProcessNewFrame(){
         qDebug("Empty Frame");
         return;
     }
-    uint8_t convertFmt = applyFilters();
+    QImage::Format convertFmt = applyFilters();
     QImage inputFr((const unsigned char *) _frameOriginal.data, _frameOriginal.cols, _frameOriginal.rows, QImage::Format_RGB888);
-    QImage outputFr((const unsigned char *) _frameProcessed.data, _frameProcessed.cols, _frameProcessed.rows, (QImage::Format) convertFmt);
+    QImage outputFr((const unsigned char *) _frameProcessed.data, _frameProcessed.cols, _frameProcessed.rows,  convertFmt);
     emit signalSendFrames(inputFr, outputFr);
 }
+
 
 void OpenCvAgent::slotSetBinThreshEn(bool isEnable){
     _isBinThreshEnabled = isEnable;
 }
 
-uint8_t OpenCvAgent::applyFilters(){
+
+QImage::Format OpenCvAgent::applyFilters(){
     Q_ASSERT(!_frameOriginal.empty());
     cv::cvtColor( _frameOriginal, _frameOriginal, cv::COLOR_BGR2RGB );
     switch (_colorScheme) {
@@ -91,8 +94,8 @@ uint8_t OpenCvAgent::applyFilters(){
     default:
         break;
     }
+    qDebug("Switch did not match any case???");
     return QImage::Format_Indexed8;
-
 }
 
 
@@ -112,13 +115,7 @@ void OpenCvAgent::freeProcessingResources(){
 
 
 
-/////////////////////////// Helpers ///////////////////////////
-bool OpenCvAgent::_isValidUint8(int &val){
-    return (val<=UINT8_MAX && val>=0);
-}
-
-
-
+/////////////////////////// Setters ///////////////////////////
 void OpenCvAgent::setColorScheme(int colorScheme){
     Q_ASSERT_X(colorScheme>=OCA_COLORSCHEME_RGB && colorScheme<=OCA_COLORSCHEME_HSV, Q_FUNC_INFO, "Invalid Color Scheme");
     qDebug("Setting Color Scheme to %d", colorScheme);
@@ -128,39 +125,51 @@ void OpenCvAgent::setColorScheme(int colorScheme){
 }
 
 void OpenCvAgent::setBinaryThresh(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, Q_FUNC_INFO, "Binary thresh must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=UINT8_MAX, Q_FUNC_INFO, "Binary thresh must be within [0,255]");
     _myFilterValues.binThresh = thresh;
 
 }
 
 
 void OpenCvAgent::setHmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_HUE, Q_FUNC_INFO, "Hue min Value must be within [0,255]");
+    if (thresh>_myFilterValues.hmax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.hmin = thresh;
 }
 
 void OpenCvAgent::setHmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_HUE),
     _myFilterValues.hmax = thresh;
 }
 
 void OpenCvAgent::setSmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_SAT, Q_FUNC_INFO, "Saturation min Value must be within [0,255]");
+    if (thresh>_myFilterValues.smax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.smin = thresh;
 }
 
 void OpenCvAgent::setSmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_SAT),
     _myFilterValues.smax = thresh;
 }
 
 void OpenCvAgent::setVmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_VAL, Q_FUNC_INFO, "Value min Value must be within [0,255]");
+    if (thresh>_myFilterValues.vmax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.vmin = thresh;
 }
 
 void OpenCvAgent::setVmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_VAL),
     _myFilterValues.vmax = thresh;
 }
 
@@ -168,31 +177,43 @@ void OpenCvAgent::setVmax(int thresh){
 
 
 void OpenCvAgent::setRmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_RED, Q_FUNC_INFO, "Red min Value must be within [0,255]");
+    if (thresh>_myFilterValues.rmax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.rmin = thresh;
 }
 
 void OpenCvAgent::setRmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_RED),
     _myFilterValues.rmax = thresh;
 }
 
 void OpenCvAgent::setGmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_GREEN, Q_FUNC_INFO, "Green min Value must be within [0,255]");
+    if (thresh>_myFilterValues.gmax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.gmin = thresh;
 }
 
 void OpenCvAgent::setGmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_GREEN),
     _myFilterValues.gmax = thresh;
 }
 
 void OpenCvAgent::setBmin(int thresh){
-    Q_ASSERT_X(thresh>=0 && thresh<=255, "setHmin", "H min Value must be within [0,255]");
+    Q_ASSERT_X(thresh>=0 && thresh<=OCA_MAXVAL_BLUE, Q_FUNC_INFO, "Blue min Value must be within [0,255]");
+    if (thresh>_myFilterValues.bmax){
+        qDebug("Incoerent value");
+        return;
+    }
     _myFilterValues.bmin = thresh;
 }
 
 void OpenCvAgent::setBmax(int thresh){
-    Q_ASSERT(thresh>=0 && thresh<=255),
+    Q_ASSERT(thresh>=0 && thresh<=OCA_MAXVAL_BLUE),
     _myFilterValues.bmax = thresh;
 }
